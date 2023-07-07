@@ -36,6 +36,7 @@ class RolesAndPermissionSeeder extends Seeder
             Role::updateOrCreate(
                 ['name' => $role,],
                 ['guard_name' => 'sanctum']
+
             )->syncPermissions($permissions);
             DB::commit();
         }
