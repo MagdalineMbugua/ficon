@@ -26,7 +26,12 @@ class User extends Authenticable
         'name',
         'email',
         'avatar',
+        'google_id',
+        'email_verified_at',
+        'last_login_at',
     ];
+
+    protected $guard_name ='sanctum';
 
     /**
      * The attributes that should be hidden for serialization.

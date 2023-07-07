@@ -17,22 +17,25 @@ class RolesAndPermissionSeeder extends Seeder
     public function run(): void
     {
         app()->make(PermissionRegistrar::class)->forgetCachedPermissions();
+
+        Role::truncate();
+        Permission::truncate();
+
         $roles = config('roles');
         foreach ($roles as $role => $permissions) {
-            Role::truncate();
-            Permission::truncate();
+
             DB::beginTransaction();
             collect($permissions)->each(function ($permission) {
                 Permission::updateOrCreate([
                     'name' => $permission,],
-                    ['guard_name' => 'api']
+                    ['guard_name' => 'sanctum']
                 );
 
             });
 
             Role::updateOrCreate(
                 ['name' => $role,],
-                ['guard_name' => 'api']
+                ['guard_name' => 'sanctum']
             )->syncPermissions($permissions);
             DB::commit();
         }

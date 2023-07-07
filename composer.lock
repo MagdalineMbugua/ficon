@@ -5,7 +5,6 @@
         "This file is @generated automatically"
     ],
     "content-hash": "2fff4893b48c2e8b46e124347c968b6a",
-
     "packages": [
         {
             "name": "brick/math",
@@ -987,8 +986,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/6f89a2b74b232d8bf2e1d9ed87e311841263dfcb",
                 "reference": "6f89a2b74b232d8bf2e1d9ed87e311841263dfcb",
-
-
                 "shasum": ""
             },
             "require": {
@@ -1175,9 +1172,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-
             "time": "2023-06-28T14:25:16+00:00"
-
         },
         {
             "name": "laravel/sanctum",
