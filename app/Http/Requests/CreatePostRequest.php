@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CreatePostRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class CreatePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->can('create_post');
     }
 
     /**
@@ -22,11 +23,10 @@ class CreatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'caption' => ['required', 'text'],
-            'on_sale' => ['required', 'boolean'],
+            'caption' => ['required', 'string'],
+            'on_sale' => ['required', 'string'],
             'media'=>['required', 'array'],
-            'media.*.url'=>['required', 'string'],
-            'media.*.media_type'=>['required', 'string'],
+            'media.*.file'=>['required', 'file','mimes:jpeg,png,jpg,avi,mpeg,quicktime,mp4'],
         ];
     }
 }

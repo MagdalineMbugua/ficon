@@ -17,12 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::apiResource('posts', PostController::class);
 Route::get('/auth/redirect', [LoginController::class, 'googleRedirect']);
 Route::get('/auth/callback', [LoginController::class, 'googleCallback']);
 
-
-Route::middleware('auth:sanctum')->group(function (){
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('users/{user}/assign-role', UserRoleController::class);
+    Route::apiResource('posts', PostController::class);
+
 });

@@ -12,6 +12,9 @@ class Post extends Model
     use HasFactory;
     use HasUserStamp;
 
+    protected $guarded=[];
+    protected $casts = ['on_sale' => 'boolean'];
+
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
