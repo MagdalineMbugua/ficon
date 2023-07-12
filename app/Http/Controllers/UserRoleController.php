@@ -17,8 +17,8 @@ class UserRoleController extends Controller
         ]);
 
         $user = Auth::user();
-
-        $user->assignRole('basic');
+        $user->roles()->detach($user->roles);
+        $user->assignRole($request->input('role_name'));
         return new UserResource($user->load('roles'));
     }
 }
