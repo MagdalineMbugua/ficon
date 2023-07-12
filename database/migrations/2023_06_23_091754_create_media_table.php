@@ -12,9 +12,8 @@ return new class extends Migration {
     {
         Schema::create('media', function (Blueprint $table) {
             $table->id();
-            $table->string('url');
+            $table->string('media_url');
             $table->unsignedBigInteger('post_id');
-            $table->string('media_type');
             $table->timestamps();
         });
     }

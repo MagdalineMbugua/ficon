@@ -10,6 +10,8 @@ use App\Models\Post;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @group posts
@@ -32,9 +34,20 @@ class PostController extends Controller
     public function store(CreatePostRequest $request): PostResource
     {
         $post = $request->validated();
-        $mediaFiles = $post->media;
-        collect($mediaFiles)->each(fn($media) => Media::create($mediaFiles->toArray));
-        return new PostResource(Post::create([$post->caption, $post->on_sale])->load('media'));
+        $savedPost = Post::create([
+            'caption' => $post['caption'],
+            'on_sale' => (bool)$post['on_sale'],
+            'created_by' => Auth::id()]);
+
+        collect($post['media'])->each(function ($mediaFile, int $key) use ($savedPost) {
+            $extension = $mediaFile['file']->extension();
+            $mediaPath = "{$savedPost->id}/media/{$key}" . '.' . "$extension";
+            $fileSystem = Storage::disk('S3');
+            $url = $fileSystem->temporaryUrl($mediaPath, now()->addDay());
+            return $savedPost->media()->save(new Media(['media_url' => $url]));
+        });
+
+        return new PostResource($post->load('media'));
     }
 
     /**

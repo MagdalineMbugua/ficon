@@ -34,6 +34,7 @@ class LoginController extends Controller
             );
 
             Auth::login($user);
+
            $tokenResult= $user->createToken('Personal Access Token');
 
             return response()->json([
