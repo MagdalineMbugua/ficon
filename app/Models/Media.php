@@ -10,5 +10,6 @@ class Media extends Model
 {
     use HasFactory;
     use Searchable;
+
     protected $guarded=[];
 }
