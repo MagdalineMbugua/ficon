@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +13,8 @@ class CreatePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('create_post');
+        $role=Role::findByName($this->user()->getRoleNames()[0]);
+        return $role->hasPermissionTo('create_post');
     }
 
     /**
