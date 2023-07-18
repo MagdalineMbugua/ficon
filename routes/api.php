@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostSearchController;
 use App\Http\Controllers\UserRoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('users/{user}/assign-role', UserRoleController::class);
     Route::apiResource('posts', PostController::class);
 
+
+});
+Route::middleware('auth:web')->group(function (){
+    Route::get('post-search', PostSearchController::class);
 });
