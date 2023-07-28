@@ -50,11 +50,9 @@ class Post extends Model
     {
         return $this->toArray();
     }
-
     public function searchableWith(): array
     {
         return ['media'];
     }
-
 
 }

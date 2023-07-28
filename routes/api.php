@@ -24,9 +24,6 @@ Route::get('/auth/callback', [LoginController::class, 'googleCallback']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('users/{user}/assign-role', UserRoleController::class);
     Route::apiResource('posts', PostController::class);
-});
-
-Route::middleware('auth:web')->group(function (){
     Route::get('post-search', PostSearchController::class);
-
 });
+
