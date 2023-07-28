@@ -39,15 +39,16 @@ class PostController extends Controller
             'on_sale' => (bool)$post['on_sale'],
             'created_by' => Auth::id()]);
 
-        collect($post['media'])->each(function ($mediaFile, int $key) use ($savedPost) {
-            $extension = $mediaFile['file']->extension();
-            $mediaPath = "{$savedPost->id}/media/{$key}" . '.' . "$extension";
-            $fileSystem = Storage::disk('S3');
-            $url = $fileSystem->temporaryUrl($mediaPath, now()->addDay());
-            return $savedPost->media()->save(new Media(['media_url' => $url]));
+        collect($post['media'])->each(function ($mediaFile) use ($savedPost) {
+
+            $fileSystem = Storage::disk('s3');
+            $url = $fileSystem->put('posts', $mediaFile['file']);
+            $path = Storage::url($url);
+
+            return $savedPost->media()->save(new Media(['media_url' => $path]));
         });
 
-        return new PostResource($post->load('media'));
+        return new PostResource($savedPost->load('media'));
     }
 
     /**
