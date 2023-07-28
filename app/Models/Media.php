@@ -12,4 +12,9 @@ class Media extends Model
     use Searchable;
 
     protected $guarded=[];
+
+    public function shouldBeSearchable(): bool
+    {
+        return count($this->toSearchableArray()) > 0;
+    }
 }
