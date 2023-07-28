@@ -23,9 +23,6 @@ class Post extends Model
       'created_by'
     ];
 
-    protected $guarded=[];
-    protected $casts = ['on_sale' => 'boolean'];
-
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
