@@ -55,6 +55,4 @@ class Post extends Model
     {
         return ['media'];
     }
-
-
 }
